@@ -19,7 +19,7 @@ The solution to this problem is the ![Frame Expansion Compensation](https://gith
 
 To be completely clear, alchemy's version is now fixed and you should give it a go first, it's much more elegant. The "dumb" version you will find here does not have all the features (e.g. thermistor smoothing) and is only meant as a last resort, or if you need to remain on the main klipper branch for some reason.
 
-# How to set it up and what exactly does it do
+# How to set DFC up and what exactly does it do
 
 Included in this repo you will find a config file named `DFC.cfg`. To use it, simply copy the .cfg file into the same folder as your printer.cfg and add the following line anywhere in your printer.cfg:
 
