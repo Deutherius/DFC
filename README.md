@@ -50,7 +50,7 @@ gcode:
      _LOG_REF_TEMP
   {% endif %}
 ```
-The `if` statement around the line makes it so that you don't have to delete or comment out the line should you decide to temporarily (or permanently) disable or delete DFC.
+The `if` statement around the macro call makes it so that you don't have to delete or comment out the line should you decide to temporarily (or permanently) disable or delete DFC.
 
 Alternatively, just add the aforementioned lines after the last `G28` or `G28 Z` command before the print begins. This saves the current frame temperature every time you home your printer as a reference.
 
