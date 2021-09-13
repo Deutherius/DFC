@@ -54,7 +54,7 @@ The `if` statement around the macro call makes it so that you don't have to dele
 
 Alternatively, just add the aforementioned lines after the last `G28` or `G28 Z` command before the print begins. This saves the current frame temperature every time you home your printer as a reference.
 
-And finally, open DFC.cfg and set `variable_coeff: 0` to your calculated frame expansion coefficient (e.g. mine is quite high at 0.03 - if yours is higher, something might be wrong with your coefficient calculation or data collection). You might also want to set an absolute limit if you find that DFC is oversquishing your parts (i.e. the height of your part is significantly shorter than it should be) - this lets DFC compensate for frame expansion where it most matters, i.e. during the first few layers, but stops the compensation at yoru specified limit. Adapt `variable_max_abs_comp: 0` to your desired limit (0 means no limit).
+And finally, open DFC.cfg and set `variable_coeff: 0` to your calculated frame expansion coefficient (e.g. mine is quite high at 0.03 - if yours is higher, something might be wrong with your coefficient calculation or data collection). You might also want to set an absolute limit if you find that DFC is oversquishing your parts (i.e. the height of your part is significantly shorter than it should be) - this lets DFC compensate for frame expansion where it most matters, i.e. during the first few layers, but stops the compensation at yoru specified limit. Adapt `variable_max_abs_comp: 0` to your desired limit (0 means no limit). I personally run at 0.03 mm/K and 0.1 mm limit, but your value will obviously vary.
 
 The main function is rather simple - every 10 seconds, a frame temperature measurement is taken and compared to a reference temperature. Their difference is multiplied by your expansion coefficient, and this value is the new negative Z offset. This adjustment is independent of the user-set Z offset - but beware, you should only use Z adjustment (i.e. live Z adjust during a print `SET_GCODE_OFFSET Z_ADJUST=0.1`), never "Z set" (i.e. offset reset `SET_GCODE_OFFSET Z=0.0`)! The macro has no way of checking if the Z offset has been changed outside of its influence and will continue to function as if it was not.
 
@@ -65,6 +65,4 @@ That's it! You can query the DFC status by calling `QUERY_DFC`, which will outpu
 ### SAFETY
 
 Since this function directly changes the Z offset, there is a real possibility of a nozzle strike if something goes wrong. With reasonable values (coeff not overshot, thermistor stable, maximum limit set), this should not happen - but you should always keep your eyes on the Z offset and be ready to E-stop your printer if things get out of hand! Mistakes happen and they can become expensive rather fast (ask me how I know). You have been warned.
-
-
 
