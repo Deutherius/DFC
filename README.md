@@ -3,7 +3,7 @@ A gcode_macro based frame thermal expansion compensation for Klipper machines
 
 # Thermal WHAT?
 
-If you have a reasonably-sized enclosed 3D printer with vertical aluminium extrusions, you might be suffering from, among other issues, thermal frame expansion. This repo provides an easy way of correction this issue. For the "other issues", such as real-time bimetallic gantry bowing compensation or temperature-dependent changing first layer Z offset, visit my other repos - former issue ![here](https://github.com/Deutherius/VGB), latter issue ![here](https://github.com/Deutherius/Gantry-bowing-induced-Z-offset-correction-through-relative-reference-index/blob/main/README.md).
+If you have a reasonably-sized enclosed 3D printer with vertical aluminium extrusions, you might be suffering from, among other issues, thermal frame expansion. This repo provides an easy way of correction this issue. For the "other issues", such as real-time bimetallic gantry bowing compensation or temperature-dependent changing first layer Z offset, visit my other repos - former issue ![here](https://github.com/Deutherius/VGB), latter issue ![here](https://github.com/Deutherius/Gantry-bowing-induced-Z-offset-correction-through-relative-reference-index).
 
 # Thermal Frame Expansion
 
