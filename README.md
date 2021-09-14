@@ -1,9 +1,10 @@
 # DFC - Dumb Frame Comp
 A gcode_macro based frame thermal expansion compensation for Klipper machines
+Part of the [Thermal Expansion Compensation Package](https://github.com/Deutherius/TECPac).
 
 # Thermal WHAT?
 
-If you have a reasonably-sized enclosed 3D printer with vertical aluminium extrusions, you might be suffering from, among other issues, thermal frame expansion. This repo provides an easy way of correction this issue. For the "other issues", such as real-time bimetallic gantry bowing compensation or temperature-dependent changing first layer Z offset, visit my other repos - former issue ![here](https://github.com/Deutherius/VGB), latter issue ![here](https://github.com/Deutherius/Gantry-bowing-induced-Z-offset-correction-through-relative-reference-index).
+If you have a reasonably-sized enclosed 3D printer with vertical aluminium extrusions, you might be suffering from, among other issues, thermal frame expansion. This repo provides an easy way of correction this issue. For the "other issues", such as real-time bimetallic gantry bowing compensation or temperature-dependent changing first layer Z offset, visit my other repos - former issue [here](https://github.com/Deutherius/VGB), latter issue [here](https://github.com/Deutherius/Gantry-bowing-induced-Z-offset-correction-through-relative-reference-index).
 
 # Thermal Frame Expansion
 
@@ -15,7 +16,7 @@ Left part is from a 7-hour print job with a first layer time of 22 minutes. The 
 
 Note that this issue can be compounded by the aforementioned bimetallic gantry bowing, particularly in the middle of the print bed. Refer to my other repos for more information.
 
-The solution to this problem is the ![Frame Expansion Compensation](https://github.com/alchemyEngine/klipper/tree/work-frame-expansion-20210410) fork of klipper by alchemyEngine. For more info, read up on ![whoppingpochard's repo](https://github.com/tanaes/whopping_Voron_mods/tree/main/docs/frame_expansion) that describes how to set it up. I tried it out, it solves the frame expansion problem in a neat built-in fashion. In my case, however, there were bugs under the hood that I was not able to iron out - you can read the full report ![here](https://github.com/Deutherius/FrameCompTesting). TL;DR: As the compensation value got bigger, Z motors started spazzing out, which manifested as visual artifacts in layers. Before alchemy was able to find and fix the bug, I developed a gcode_macro-based solution that works pretty much the same, but applies the compensation using Z_offset adjustments, which avoids any potential conflicts with klipper's innards.
+The solution to this problem is the [Frame Expansion Compensation](https://github.com/alchemyEngine/klipper/tree/work-frame-expansion-20210410) fork of klipper by alchemyEngine. For more info, read up on [whoppingpochard's repo](https://github.com/tanaes/whopping_Voron_mods/tree/main/docs/frame_expansion) that describes how to set it up. I tried it out, it solves the frame expansion problem in a neat built-in fashion. In my case, however, there were bugs under the hood that I was not able to iron out - you can read the full report [here](https://github.com/Deutherius/FrameCompTesting). TL;DR: As the compensation value got bigger, Z motors started spazzing out, which manifested as visual artifacts in layers. Before alchemy was able to find and fix the bug, I developed a gcode_macro-based solution that works pretty much the same, but applies the compensation using Z_offset adjustments, which avoids any potential conflicts with klipper's innards.
 
 To be completely clear, alchemy's version is now fixed and you should give it a go first, it's much more elegant. The "dumb" version you will find here does not have all the features (e.g. thermistor smoothing) and is only meant as a last resort, or if you need to remain on the main klipper branch for some reason.
 
@@ -25,7 +26,7 @@ Included in this repo you will find a config file named `DFC.cfg`. To use it, si
 
 `[include DFC.cfg]`
 
-In addition to the above, you need to have a thermistor measuring frame temperature set up as `[temperature_sensor frame]` (the easy part), and have your frame expansion coefficient calculated (the harder part). Refer to ![Whopping's repo](https://github.com/tanaes/whopping_Voron_mods/tree/main/docs/frame_expansion) on how to do that. You do *not* need to have the Frame Comp branch of klipper installed to run the measure_thermal_behavior.py script. You can specify a different thermistor name should you wish to either name your thermistor differently, or outright use a different thermistor placement (not recommended).
+In addition to the above, you need to have a thermistor measuring frame temperature set up as `[temperature_sensor frame]` (the easy part), and have your frame expansion coefficient calculated (the harder part). Refer to [Whopping's repo](https://github.com/tanaes/whopping_Voron_mods/tree/main/docs/frame_expansion) on how to do that. You do *not* need to have the Frame Comp branch of klipper installed to run the measure_thermal_behavior.py script. You can specify a different thermistor name should you wish to either name your thermistor differently, or outright use a different thermistor placement (not recommended).
 
 You will also need to insert these 3 lines at the last Z homing before a print:
 ```
