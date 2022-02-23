@@ -2,7 +2,7 @@
 A gcode_macro based frame thermal expansion compensation for Klipper machines
 Part of the [Thermal Expansion Compensation Package](https://github.com/Deutherius/TECPac).
 
-# WARNING - DO NOT USE
+# WARNING - DEPRECATED - DO NOT USE DFC
 After weeks of dealing with random blobs on curved sections of my prints, I traced the cause to DFC. 
 
 **TL;DR**: don't use it in its current form, delete it from your printer config (disabling it through the enable flag is *not* enough), forget this exists and go install the proper, [not-dumb version](https://github.com/alchemyEngine/klipper_frame_expansion_comp).
