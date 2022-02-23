@@ -2,6 +2,23 @@
 A gcode_macro based frame thermal expansion compensation for Klipper machines
 Part of the [Thermal Expansion Compensation Package](https://github.com/Deutherius/TECPac).
 
+# WARNING - DO NOT USE
+After weeks of dealing with random blobs on curved sections of my prints, I traced the cause to DFC. 
+
+**TL;DR**: don't use it in its current form, delete it from your printer config (disabling it through the enable flag is *not* enough), forget this exists and go install the proper, [not-dumb version](https://github.com/alchemyEngine/klipper_frame_expansion_comp).
+
+**Long version**: The current implementation injects a Z adjust offset command into the gcode queue roughly every 10 seconds. When this happens, the printer has to finish the Z adjust (basically a very tiny Z move) before moving in X or Y. This cannot happen to long straight walls, but curves are basically just a bunch of tiny straight walls. This means that there is a high likelyhood of this Z adjust move happening just after a long linear XY move, or at any point within a curve. Problem is that while this Z adjust move is imperceptible to human eye, it stops the toolhead for just enough time (I'm guessing a couple of ms, but don't quote me on that) to cause a tiny ooze due to nozzle overpessure, which manifests as a small blob. Increasing pressure advance and decreasing perimeter speed can lessen this artifact (less pressure in the nozzle), but will never completely fix it. The reason why setting the enable flag to 0 will not stop this from happening is that I am a potato and keep sending the Z adjust command with a 0 value. Apparently that is till enough to stop the toolhead and cause a blob.
+
+**I am really sorry if this affected you.** It certainly caused me a lot of headaches and headscratching. Thanks to bythorsthunder for sticking with me and helping me troubleshoot this.
+
+**Will there be a solution?** It is probably possible to solve this. I could probably intercept G0/G1 commands and inject the Z adjust at a better time (during a retract, in the sparse infill, during a travel move...) where the blob will at least not be visible. But even that has things that can go wrong (e.g. very long first layer with just perimeters and solid infill - this is exactly the place where DFC is most useful, but can cause the most damage). Or it might be possible to keep an internal Z offset and inject Z movements to what were previously XY-only moves - this type of a Z adjust would not cause the printhead to stop. 
+
+That being said, sounds like a very overcomplicated and overkill solution for something that can be better solved using a Moonraker plugin. If you are wondering, the real frame comp likely does not suffer from any such issue, because it directly works with the transform subsystem which runs in parallel and can stack with other transforms like tilt and mesh. 
+
+This was always a kind of a stopgap solution before the bug in frame comp I mention in the next sections got fixed. Just go with the real thing.
+
+I will keep this repo up for anyone who wants to play with it, but do not recommend using it.
+
 # Thermal WHAT?
 
 If you have a reasonably-sized enclosed 3D printer with vertical aluminium extrusions, you might be suffering from, among other issues, thermal frame expansion. This repo provides an easy way of correction this issue. For the "other issues", such as real-time bimetallic gantry bowing compensation or temperature-dependent changing first layer Z offset, visit my other repos - former issue [here](https://github.com/Deutherius/VGB), latter issue [here](https://github.com/Deutherius/Gantry-bowing-induced-Z-offset-correction-through-relative-reference-index).
